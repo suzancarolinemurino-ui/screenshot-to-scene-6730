@@ -142,3 +142,57 @@
     color: var(--color-foreground);
   }
 }
+
+/* Manual do Imigrante landing page tokens (scoped) */
+@theme inline {
+  --color-mi-bg: var(--mi-bg);
+  --color-mi-navy: var(--mi-navy);
+  --color-mi-blue: var(--mi-blue);
+  --color-mi-coral: var(--mi-coral);
+  --color-mi-yellow: var(--mi-yellow);
+  --color-mi-text: var(--mi-text);
+  --color-mi-muted: var(--mi-muted);
+  --color-mi-white: var(--mi-white);
+  --color-mi-border: var(--mi-border);
+  --font-mi-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-mi-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --mi-bg: oklch(0.982 0.006 80);
+  --mi-navy: oklch(0.33 0.065 245);
+  --mi-blue: oklch(0.49 0.08 230);
+  --mi-coral: oklch(0.67 0.12 40);
+  --mi-yellow: oklch(0.88 0.1 88);
+  --mi-text: oklch(0.3 0.025 235);
+  --mi-muted: oklch(0.53 0.018 225);
+  --mi-white: oklch(1 0 0);
+  --mi-border: oklch(0.9 0.012 80);
+}
+
+@layer components {
+  .mi-page { font-family: var(--font-mi-body); background: var(--mi-bg); color: var(--mi-text); overflow-x: clip; }
+  .mi-container { width: 100%; max-width: 1140px; margin-inline: auto; padding-inline: 16px; }
+  @media (min-width: 768px) { .mi-container { padding-inline: 24px; } }
+  .mi-section { padding-block: clamp(56px, 8vw, 104px); }
+  .mi-h1 { font-family: var(--font-mi-display); font-weight: 800; color: var(--mi-navy); font-size: clamp(2.125rem, 5.2vw, 4rem); line-height: 1.08; letter-spacing: -0.02em; overflow-wrap: break-word; }
+  .mi-h2 { font-family: var(--font-mi-display); font-weight: 800; color: var(--mi-navy); font-size: clamp(1.875rem, 4.4vw, 3.25rem); line-height: 1.1; letter-spacing: -0.02em; overflow-wrap: break-word; }
+  .mi-h3 { font-family: var(--font-mi-display); font-weight: 800; color: var(--mi-navy); font-size: 1.25rem; line-height: 1.25; }
+  .mi-body { font-size: clamp(1rem, 1.4vw, 1.125rem); line-height: 1.65; color: var(--mi-text); }
+  .mi-eyebrow { display: inline-block; font-size: 0.8125rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mi-blue); }
+  .mi-card { background: var(--mi-white); border: 1px solid var(--mi-border); border-radius: 16px; padding: 24px; }
+  .mi-icon { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; flex-shrink: 0; border-radius: 12px; background: color-mix(in oklab, var(--mi-yellow) 45%, var(--mi-white)); color: var(--mi-navy); }
+  .mi-pill { display: inline-flex; max-width: 100%; border-radius: 999px; padding: 6px 12px; font-size: 0.8125rem; font-weight: 600; background: color-mix(in oklab, var(--mi-blue) 12%, var(--mi-white)); color: var(--mi-blue); overflow-wrap: anywhere; }
+  .mi-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 56px; padding: 14px 28px; border-radius: 12px; font-weight: 700; font-size: 1rem; text-align: center; transition: opacity 200ms; cursor: pointer; max-width: 100%; }
+  .mi-btn:hover { opacity: 0.9; }
+  .mi-btn-primary { background: var(--mi-coral); color: var(--mi-white); border: 2px solid var(--mi-coral); }
+  .mi-btn-secondary { background: transparent; color: var(--mi-navy); border: 2px solid var(--mi-navy); }
+  .mi-media { width: 100%; overflow: hidden; border-radius: 20px; background: var(--mi-border); }
+  .mi-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .mi-fade { opacity: 0; transition: opacity 700ms ease; }
+  .mi-fade.is-in { opacity: 1; }
+  .mi-float { position: fixed; left: 50%; bottom: 16px; z-index: 50; transform: translate(-50%, 8px); opacity: 0; pointer-events: none; transition: opacity 250ms, transform 250ms; box-shadow: 0 8px 24px -10px color-mix(in oklab, var(--mi-navy) 50%, transparent); white-space: nowrap; }
+  .mi-float.is-visible { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+  .mi-phone { width: min(100%, 340px); margin-inline: auto; border-radius: 36px; background: var(--mi-navy); padding: 12px; }
+  .mi-phone-screen { border-radius: 26px; background: var(--mi-bg); overflow: hidden; }
+}
