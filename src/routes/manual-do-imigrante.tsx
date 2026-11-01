@@ -64,7 +64,7 @@ function Fade({ children, className = "" }: { children: ReactNode; className?: s
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(([e]) => e.isIntersecting && setInView(true), { threshold: 0.1 });
+    const io = new IntersectionObserver(([e]) => e?.isIntersecting && setInView(true), { threshold: 0.1 });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -209,7 +209,7 @@ const offerItems = [
   "acesso vitalício.",
 ];
 
-const faqs = [
+const faqs: [string, string][] = [
   ["O Manual é um curso de inglês?", "Não. É um aplicativo web de consulta rápida, com frases organizadas por situações reais. Não há aulas em vídeo nem exercícios."],
   ["O aplicativo é para quem tem filhos?", "Ele foi criado com atenção especial à rotina de mães e famílias, incluindo situações como escola, médico e farmácia. Também traz frases para mercado, transporte, trabalho, emergência e outras situações do cotidiano."],
   ["Preciso instalar o aplicativo?", "Não. Ele abre pelo navegador do celular. Você não precisa baixá-lo pela App Store ou pelo Google Play."],
