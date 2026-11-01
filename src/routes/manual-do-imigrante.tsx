@@ -1,15 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
-  School, Stethoscope, Pill, ShoppingCart, Bus, Briefcase, Siren, Home, Landmark,
-  Smartphone, Users, Wrench, MapPin, Calendar, Volume2, ShoppingBasket, Ear, ShieldAlert,
+  School, Stethoscope, Pill, ShoppingCart, Bus, Briefcase, Siren, Home,
+  MessageCircle, Package, Coffee, Train, Phone, Calendar, Volume2, ShoppingBasket, Ear, ShieldAlert,
   Lock, ChevronDown, Check, ArrowRight,
 } from "lucide-react";
 
 import heroImg from "@/assets/mi-hero.jpg";
 import familiaImg from "@/assets/mi-familia.jpg";
-import consultaImg from "@/assets/mi-consulta.jpg";
 import mesaImg from "@/assets/mi-mesa.jpg";
+import autoraImg from "@/assets/mi-autora.jpg";
 
 const CHECKOUT_URL = "";
 
@@ -75,10 +75,10 @@ function Fade({ children, className = "" }: { children: ReactNode; className?: s
   );
 }
 
-function Photo({ src, alt, ratio, eager, w, h }: { src: string; alt: string; ratio: string; eager?: boolean; w: number; h: number }) {
+function Photo({ src, alt, ratio, eager, w, h, pos }: { src: string; alt: string; ratio: string; eager?: boolean; w: number; h: number; pos?: string }) {
   return (
     <div className={`mi-media ${ratio}`}>
-      <img src={src} alt={alt} width={w} height={h} loading={eager ? "eager" : "lazy"} fetchPriority={eager ? "high" : "auto"} />
+      <img src={src} alt={alt} width={w} height={h} loading={eager ? "eager" : "lazy"} fetchPriority={eager ? "high" : "auto"} style={pos ? { objectPosition: pos } : undefined} />
     </div>
   );
 }
@@ -121,19 +121,19 @@ function PhoneMockup({ situation, en, pt, how, hear }: { situation: string; en: 
 }
 
 const situations = [
-  { icon: School, t: "Escola dos filhos" },
-  { icon: Stethoscope, t: "Médico e NHS" },
+  { icon: MessageCircle, t: "Primeiras conversas e pedidos de ajuda" },
+  { icon: ShoppingCart, t: "Supermercado e compras" },
+  { icon: Stethoscope, t: "Médico e consulta com GP" },
   { icon: Pill, t: "Farmácia" },
-  { icon: ShoppingCart, t: "Mercado" },
-  { icon: Bus, t: "Transporte" },
+  { icon: School, t: "Escola e comunicação com a equipe" },
   { icon: Briefcase, t: "Trabalho" },
-  { icon: Siren, t: "Emergência" },
-  { icon: Home, t: "Moradia" },
-  { icon: Landmark, t: "Banco" },
-  { icon: Smartphone, t: "Telefone e internet" },
-  { icon: Users, t: "Vizinhança" },
-  { icon: Wrench, t: "Serviços do dia a dia" },
-  { icon: MapPin, t: "Outras situações comuns no Reino Unido" },
+  { icon: Package, t: "Entregas de comida" },
+  { icon: Coffee, t: "Café e restaurante" },
+  { icon: Train, t: "Passagens e estações" },
+  { icon: Bus, t: "Transporte e direções" },
+  { icon: Home, t: "Moradia e contas" },
+  { icon: Phone, t: "Telefone e agendamentos" },
+  { icon: Siren, t: "Emergências e pedido de ajuda" },
 ];
 
 const benefits = [
@@ -149,10 +149,10 @@ const bullets: [string, string, string][] = [
   ["A frase que você pode ouvir do outro lado", "ajuda a se preparar para além daquilo que você vai dizer.", "O que você pode ouvir"],
   ["A pronúncia aparece escrita em português", "para você ter um apoio antes de tentar falar.", "Como falar"],
   ["O botão Ouvir traz voz britânica", "para você escutar a frase no idioma usado no Reino Unido.", "Áudio da frase"],
-  ["O quadro de emergência fica dentro do Manual", "para consultar quando a situação exigir mais rapidez.", "Quadro de emergência"],
+  ["Existe uma situação só para emergências e pedidos de ajuda", "com frases curtas para consultar quando você precisar falar com mais rapidez.", "Emergências"],
+  ["Cada situação traz uma dica", "para você se preparar com informações do dia a dia no Reino Unido.", "Dicas"],
   ["As situações ficam separadas por contexto", "para você não precisar procurar tudo em uma tela sem organização.", "13 situações"],
   ["O acesso acontece pelo navegador do celular", "sem precisar baixar o aplicativo em uma loja.", "Acesso web"],
-  ["O conteúdo e os áudios continuam funcionando depois que a página carrega", "mesmo sem internet naquele momento.", "Funcionamento offline após carregamento"],
   ["Você recebe um código de acesso depois da compra", "para entrar no aplicativo protegido.", "Código de acesso"],
 ];
 
@@ -189,8 +189,6 @@ const objections: { q: string; a: string[] }[] = [
       "Não.",
       "O Manual abre pelo navegador do celular. Você não precisa baixar nada pela App Store ou pelo Google Play.",
       "Depois da compra, você recebe o link do aplicativo e um código de acesso.",
-      "É necessário ter internet para abrir o Manual pela primeira vez. Depois que a página carregou, o conteúdo e os áudios continuam funcionando mesmo sem internet.",
-      "Se você fechar o aplicativo, precisará de internet para abri-lo novamente.",
     ],
   },
 ];
@@ -204,8 +202,7 @@ const offerItems = [
   "áudio com voz britânica;",
   "seção “O que você pode ouvir”;",
   "dicas para cada situação;",
-  "quadro de emergência;",
-  "fotos reais do dia a dia;",
+  "situação de emergências e pedido de ajuda;",
   "acesso vitalício.",
 ];
 
@@ -215,7 +212,6 @@ const faqs: [string, string][] = [
   ["Preciso instalar o aplicativo?", "Não. Ele abre pelo navegador do celular. Você não precisa baixá-lo pela App Store ou pelo Google Play."],
   ["O acesso é por quanto tempo?", "O acesso é vitalício, mediante pagamento único."],
   ["O pagamento é mensal?", "Não. O valor é de £17 em pagamento único. Não é uma assinatura."],
-  ["Preciso de internet?", "Você precisa de internet para abrir o Manual pela primeira vez. Depois que a página carregou, o conteúdo e os áudios continuam funcionando mesmo sem internet. Se você fechar o aplicativo, precisará de internet para abri-lo novamente."],
   ["O Manual garante fluência?", "Não. O Manual não promete fluência. Ele é um apoio para consultar, ouvir e entender frases úteis em situações reais do dia a dia no Reino Unido."],
 ];
 
@@ -286,16 +282,16 @@ function ManualPage() {
                 no celular antes de falar.
               </p>
             </div>
-            <Photo src={heroImg} w={1024} h={1024} eager ratio="aspect-[4/5] lg:aspect-square"
-              alt="Mãe brasileira em casa no Reino Unido, de casaco, consultando o celular antes de sair para a escola dos filhos" />
+            <Photo src={heroImg} w={800} h={1000} eager pos="50% 55%" ratio="aspect-[4/5] lg:aspect-square"
+              alt="Mão segurando um celular com o Manual do Imigrante aberto, sobre uma mesa com bloco de notas ao fundo" />
           </div>
         </section>
 
         {/* 2 Família */}
         <section className="mi-section bg-mi-white">
           <Fade className="mi-container grid items-center gap-10 lg:grid-cols-[45fr_55fr]">
-            <Photo src={familiaImg} w={864} h={1088} ratio="aspect-[4/5]"
-              alt="Mãe brasileira com o filho na sala de espera de uma clínica no Reino Unido, olhando o celular juntos" />
+            <Photo src={familiaImg} w={800} h={1000} pos="50% 30%" ratio="aspect-[4/5]"
+              alt="Pai com três crianças esperando atendimento em uma sala de espera de clínica" />
             <div className="flex flex-col gap-6">
               <h2 className="mi-h2">Uma ajuda para quando a família precisa de você</h2>
               <p className="mi-body">
@@ -327,10 +323,10 @@ function ManualPage() {
             </div>
             <div className="mi-media flex aspect-square items-center justify-center bg-mi-yellow/30 p-6">
               <PhoneMockup
-                situation="Médico e NHS"
-                en="I'd like to book an appointment for my son, please."
-                pt="Eu gostaria de marcar uma consulta para o meu filho, por favor."
-                how="ái-d láik tu buk an apóint-ment for mai san, plíz"
+                situation="Médico e consulta com GP"
+                en="I'd like to book an appointment."
+                pt="Gostaria de marcar uma consulta."
+                how="aid láik tu búk an aPÓINTmênt"
               />
             </div>
           </Fade>
@@ -368,16 +364,22 @@ function ManualPage() {
                 antes de dizer.
               </p>
             </div>
-            <Photo src={consultaImg} w={864} h={1088} ratio="aspect-[4/5]"
-              alt="Mãe brasileira em uma farmácia no Reino Unido consultando uma frase no celular antes de falar com a atendente" />
+            <div className="mi-media flex aspect-[4/5] items-center justify-center bg-mi-yellow/30 p-6">
+              <PhoneMockup
+                situation="Farmácia"
+                en="I need something for a headache."
+                pt="Preciso de algo para dor de cabeça."
+                how="ai nid SÂMthin fór a RÉDeik"
+              />
+            </div>
           </Fade>
         </section>
 
         {/* 6 Mecanismo */}
         <section className="mi-section bg-mi-white">
           <Fade className="mi-container grid items-center gap-10 lg:grid-cols-[45fr_55fr]">
-            <Photo src={mesaImg} w={864} h={1088} ratio="aspect-[4/5]"
-              alt="Mãos de uma mãe organizando a rotina na mesa, com celular, agenda escolar, chaves e lista de compras" />
+            <Photo src={mesaImg} w={800} h={1000} ratio="aspect-[4/5]"
+              alt="Mão escrevendo uma lista de compras em um bloco de notas, ao lado de um celular sobre a mesa" />
             <div className="flex flex-col gap-6">
               <h2 className="mi-h2">O apoio está organizado do jeito que a vida acontece</h2>
               <p className="mi-body">
@@ -385,8 +387,8 @@ function ManualPage() {
                 consulta, a farmácia, o mercado, o transporte, o trabalho.
               </p>
               <p className="mi-body">
-                Em cada situação, você encontra o que dizer, o que pode ouvir do outro lado e dicas para se preparar. E,
-                se algo sair do normal, o quadro de emergência está lá dentro.
+                Em cada situação, você encontra o que dizer, o que pode ouvir do outro lado e dicas para se preparar. Há também uma situação só
+                para emergências e pedido de ajuda.
               </p>
             </div>
           </Fade>
@@ -415,7 +417,7 @@ function ManualPage() {
             <div className="flex flex-col gap-6">
               <h2 className="mi-h2">O que você recebe ao comprar</h2>
               <ul className="flex flex-col gap-3">
-                {["Aplicativo web em português e inglês britânico", "13 situações da vida real", "130 frases úteis", "Tradução, pronúncia escrita e áudio com voz britânica", "Seção “O que você pode ouvir” e dicas para cada situação", "Quadro de emergência", "Acesso vitalício"].map((i) => (
+                {["Aplicativo web em português e inglês britânico", "13 situações da vida real", "130 frases úteis", "Tradução, pronúncia escrita e áudio com voz britânica", "Seção “O que você pode ouvir” e dicas para cada situação", "Situação de emergências e pedido de ajuda", "Acesso vitalício"].map((i) => (
                   <li key={i} className="mi-body flex items-start gap-3">
                     <Check size={22} aria-hidden="true" className="mt-1 shrink-0 text-mi-blue" />
                     <span>{i}</span>
@@ -425,11 +427,11 @@ function ManualPage() {
             </div>
             <div className="mi-media flex aspect-square items-center justify-center bg-mi-blue/10 p-6">
               <PhoneMockup
-                situation="Escola dos filhos"
-                en="My daughter won't be in school today. She's not feeling well."
-                pt="Minha filha não vai à escola hoje. Ela não está se sentindo bem."
-                how="mai dóter uônt bi in skúl tudêi. xíz nót fíling uél"
-                hear="Thank you for letting us know. We hope she feels better soon."
+                situation="Escola e comunicação com a equipe"
+                en="My child is unwell and won't be in school today."
+                pt="Meu filho / Minha filha está doente e não vai à escola hoje."
+                how="mai tcháild iz ânUÉL énd uôunt bi in skul tuDÊI"
+                hear="Please sign and return this form. (Assine e devolva este formulário.)"
               />
             </div>
           </Fade>
@@ -502,10 +504,12 @@ function ManualPage() {
           </div>
         </section>
 
-        {/* 12 Autora (foto omitida até a imagem estar disponível) */}
+        {/* 12 Autora */}
         <section className="mi-section bg-mi-white">
-          <Fade className="mi-container">
-            <div className="mx-auto flex max-w-3xl flex-col gap-5">
+          <Fade className="mi-container grid items-center gap-10 lg:grid-cols-[40fr_60fr]">
+            <Photo src={autoraImg} w={600} h={800} pos="50% 40%" ratio="mx-auto aspect-[3/4] max-w-[420px]"
+              alt="Suzan, criadora do Manual do Imigrante – Reino Unido, sorrindo em frente a uma ponte de pedra sobre um rio" />
+            <div className="flex max-w-3xl flex-col gap-5">
               <h2 className="mi-h2">FEITO POR QUEM JÁ DEPENDEU DOS OUTROS PARA SE VIRAR</h2>
               <p className="mi-body">Eu sou a Suzan.</p>
               <p className="mi-body">Saí do Brasil ainda adolescente, vivi na Itália e nos Estados Unidos, e hoje moro na Inglaterra com o meu marido, o Felipe, e os nossos três filhos.</p>
